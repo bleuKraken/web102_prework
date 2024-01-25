@@ -120,9 +120,12 @@ gamesCard.textContent = GAMES_JSON.length;
  */
 
 
+// * 7 + 4 + FLANNEL + click + 
+
+// * 74FLANNELclick
 
 
-
+// ! Step 1
 // show only games that do not yet have enough funding
 function filterUnfundedOnly() {
   deleteChildElements(gamesContainer);
@@ -134,52 +137,69 @@ function filterUnfundedOnly() {
   // * ADDED
   // use the function we previously created to add the unfunded games to the DOM
   addGamesToPage(unfundedGames);
+  console.log("unfiltered: " + unfundedGames);
 }
 
 
-
+// ! step 2
 // show only games that are fully funded
 function filterFundedOnly() {
   deleteChildElements(gamesContainer);
 
+  // * added
   // use filter() to get a list of games that have met or exceeded their goal
+  const fundedOnly = GAMES_JSON.filter((game) => game.pledged > game.goal);
 
+
+    // * ADDED
   // use the function we previously created to add unfunded games to the DOM
+  addGamesToPage(fundedOnly);
+  console.log("Funded only: " + fundedOnly);
 }
 
+// ! step 3
 // show all games
 function showAllGames() {
   deleteChildElements(gamesContainer);
 
+  // * ADDED
   // add all games from the JSON data to the DOM
+  addGamesToPage(GAMES_JSON);
 }
 
+// ! step 4
 // select each button in the "Our Games" section
 const unfundedBtn = document.getElementById("unfunded-btn");
 const fundedBtn = document.getElementById("funded-btn");
 const allBtn = document.getElementById("all-btn");
 
 // add event listeners with the correct functions to each button
-// * ADDED. maybe remove
+// * ADDED
 // Add event listener to the unfunded button
 unfundedBtn.addEventListener("click", filterUnfundedOnly);
+fundedBtn.addEventListener("click", filterFundedOnly);
+allBtn.addEventListener("click", showAllGames);
 
 /*************************************************************************************
- * Challenge 6: Add more information at the top of the page about the company.
- * Skills used: template literals, ternary operator
+ ** Challenge 6: Add more information at the top of the page about the company.
+ ** Skills used: template literals, ternary operator
  */
 
 // grab the description container
 const descriptionContainer = document.getElementById("description-container");
 
+// ! this is wrong
+// * figure out how to sum using reduce or filter
 // use filter or reduce to count the number of unfunded games
+const sumOfUnfundedGames = GAMES_JSON.reduce((sum, game) => sum + game.pledged, 0);
 
+console.log("Total Pledged:", sumOfUnfundedGames);
 // create a string that explains the number of unfunded games using the ternary operator
 
 // create a new DOM element containing the template string and append it to the description container
 
 /************************************************************************************
- * Challenge 7: Select & display the top 2 games
+ *  Challenge 7: Select & display the top 2 games
  * Skills used: spread operator, destructuring, template literals, sort
  */
 
